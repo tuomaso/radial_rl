@@ -3,7 +3,7 @@
 # Robust Deep Reinforcement Learning through Adversarial Loss
 
 This repository is the official implementation of [Robust Deep Reinforcement Learning through Adversarial Loss](https://arxiv.org/abs/2030.12345). 
-Our code build on top of various existing implementations, most notably:
+Our code builds on top of various existing implementations, most notably:
 
 A3C implementation overall flow based on https://github.com/dgriff777/rl_a3c_pytorch.
 
