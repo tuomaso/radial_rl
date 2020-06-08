@@ -3,10 +3,15 @@
 # Robust Deep Reinforcement Learning through Adversarial Loss
 
 This repository is the official implementation of [Robust Deep Reinforcement Learning through Adversarial Loss](https://arxiv.org/abs/2030.12345). 
+A3C implementation overall flow based on https://github.com/dgriff777/rl_a3c_pytorch.
+DQN implementation based on https://github.com/higgsfield/RL-Adventure
+Adversarial attack implementations based on https://github.com/advboxes/AdvBox/blob/master/advbox.md.
+
 
 > 📋Optional: include a graphic explaining your approach/main result, bibtex entry, link to demos, blog posts and tutorials
 
 ## Requirements
+To run our code you need to have Python 3 and pip installed on your systems. Our experiments were run using python 3.7.6
 
 To install requirements:
 
