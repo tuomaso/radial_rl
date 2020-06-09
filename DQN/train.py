@@ -40,10 +40,8 @@ def _compute_robust_loss(curr_model, target_model, data, epsilon, kappa, gamma, 
     worst_case_loss = torch.sum(torch.min(wc_diff.pow(2), wc_diff), dim=1).mean()
     
     standard_loss = standard_loss.mean()
-    if args.geometric:
-        loss = (standard_loss*worst_case_loss)**0.5
-    else:
-        loss = (kappa*(standard_loss)+(1-kappa)*(worst_case_loss))
+    
+    loss = (kappa*(standard_loss)+(1-kappa)*(worst_case_loss))
     
     return loss, standard_loss, worst_case_loss
 
@@ -63,33 +61,8 @@ def _compute_loss(curr_model, target_model, data, gamma, device):
     
     return standard_loss, standard_loss, standard_loss
 
-def _compute_loss_theirs(curr_model, target_model, data, epsilon, gamma, device, args):
-    state, action, reward, next_state, done = data
-    
-    q_values      = curr_model(state)
-    next_q_values = curr_model(next_state)
-    next_q_state_values = target_model(next_state) 
-
-    q_value       = q_values.gather(1, action.unsqueeze(1)).squeeze(1)
-    next_q_value = next_q_state_values.gather(1, torch.argmax(next_q_values, 1, keepdim=True)).squeeze(1)
-    expected_q_value = reward + gamma * next_q_value * (1 - done)
-    
-    standard_loss = torch.min((q_value - expected_q_value.detach()).pow(2), torch.abs(q_value - expected_q_value.detach()))
-    standard_loss = standard_loss.mean()
-    
-    upper, lower = network_bounds(curr_model.model, state, epsilon)
-    onehot_labels = torch.zeros(upper.shape).to(device)
-    onehot_labels[range(state.shape[0]), action] = 1
-    lowers = torch.index_select(lower, 1, action)
-    closest = torch.max(upper-1000*onehot_labels, dim=1)[0]
-    reg = (torch.max(-1*torch.ones(lowers.shape).to(device), closest-lowers)+1).mean()
-    loss = standard_loss + args.sadqn_kappa*reg
-    #print('worst case', F.mse_loss(worst_case, q_values.detach()))
-    
-    return loss, standard_loss, reg
-
 def train(current_model, target_model, env, optimizer, args):
-    start_time = datetime.now().strftime('%Y-%m-%d_%H:%M:%S')
+    start_time = datetime.now().strftime('%Y-%m-%d_%H_%M_%S')
     log = {}
     setup_logger('{}_log'.format(args.env), r'{}{}_{}_log'.format(
         args.log_dir, args.env, start_time))
@@ -162,25 +135,17 @@ def train(current_model, target_model, env, optimizer, args):
                     torch.save(state_to_save, '{}{}_{}_best.pt'.format(
                         args.save_model_dir, args.env, start_time))
 
-        #print(frame_idx%(batch_size/updates_per_frame))
+        
         if frame_idx > args.replay_initial and frame_idx%(args.batch_size/args.updates_per_frame)==0:
-            if args.load:
-                #increase over 3M, same for 1.5M
-                #lin_coeff = min(1, (3/2*frame_idx+1)/args.total_frames)
-                lin_coeff = min(1, (frame_idx+1)/max(args.attack_epsilon_schedule, args.total_frames))
-            else:
-                # <0 for first quarter, increses 1 over next third and stays at 1
-                lin_coeff = min((frame_idx-args.total_frames*0.25)*3/args.total_frames, 1)
+            
+            lin_coeff = min(1, (frame_idx+1)/max(args.attack_epsilon_schedule, args.total_frames))
+            
             attack_epsilon = lin_coeff*args.attack_epsilon_end
             kappa = (1-lin_coeff)*1 + lin_coeff*args.kappa_end
 
             data = replay_buffer.sample(args.batch_size)
-            if args.robust and ((frame_idx/args.total_frames > 0.25) or args.load):
-                if args.sadqn:
-                    loss, standard_loss, worst_case_loss = _compute_loss_theirs(current_model, target_model, data, attack_epsilon,
-                                                                  args.gamma, device, args)
-                else:
-                    loss, standard_loss, worst_case_loss = _compute_robust_loss(current_model, target_model, data, attack_epsilon,
+            if args.robust:
+                loss, standard_loss, worst_case_loss = _compute_robust_loss(current_model, target_model, data, attack_epsilon,
                                                                      kappa, args.gamma, device, args)
             else:
                 loss, standard_loss, worst_case_loss = _compute_loss(current_model, target_model, data, args.gamma, device)
@@ -209,7 +174,7 @@ def test(args, model, env, device):
         while True:
             state = torch.FloatTensor(state).unsqueeze(0).to(device)
             output = model.forward(state)
-            #print(output)
+            
             action = torch.argmax(output, dim=1)
             
             next_state, reward, done, info = env.step(action)
@@ -228,43 +193,13 @@ class ReplayBuffer(object):
         self.capacity = capacity
         self.device = device
         self.buffer = []
-        #self.has_buffers = False
-        #self.index = 0
     
     def push(self, state, action, reward, next_state, done):
-        '''state, action, reward, next_state, done = (state.squeeze(0), action.squeeze(0), 
-                                                    reward.squeeze(0), next_state.squeeze(0), done.squeeze(0))
-        if not self.has_buffers:
-            self.states = torch.zeros([self.capacity, *state.shape]).to(self.device)
-            print(self.states.shape)
-            self.actions = torch.zeros([self.capacity, *action.shape], dtype=torch.long).to(self.device)
-            print(self.actions.shape)
-            self.rewards = torch.zeros([self.capacity, *reward.shape]).to(self.device)
-            print(self.rewards.shape)
-            self.next_states = torch.zeros([self.capacity, *next_state.shape]).to(self.device)
-            self.dones = torch.zeros([self.capacity, *done.shape], dtype=torch.long).to(self.device)
-            print(self.dones.shape)
-            self.has_buffers = True
-            
-        self.states[self.index] = state
-        self.actions[self.index] = action
-        self.rewards[self.index] = reward
-        self.next_states[self.index] = next_state
-        self.dones[self.index] = done
-        self.index = (self.index + 1)%self.capacity'''
         self.buffer.append((state, action, reward, next_state, done))
         if len(self.buffer) > self.capacity:
             self.buffer.pop(0)
     
     def sample(self, batch_size):
-        '''indices = random.sample(range(self.capacity), batch_size)
-        indices = torch.LongTensor(indices).to(self.device)
-        state = self.states.index_select(0, indices)
-        action = self.actions.index_select(0, indices)
-        reward = self.rewards.index_select(0, indices)
-        next_state = self.next_states.index_select(0, indices)
-        done = self.dones.index_select(0, indices)
-        return state, action, reward, next_state, done'''
         state, action, reward, next_state, done = zip(*random.sample(self.buffer, batch_size))
         return (torch.cat(state, dim=0), torch.cat(action, dim=0), torch.cat(reward, dim=0), 
                 torch.cat(next_state, dim =0), torch.cat(done, dim=0))

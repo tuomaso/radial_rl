@@ -47,7 +47,7 @@ parser.add_argument(
     '--load-path',
     default='trained_models/PongNoFrameskip-v4_robust.pt',
     metavar='LMD',
-    help='folder to load trained models from')
+    help='path to trained model file')
 parser.add_argument(
     '--gpu-id',
     type=int,
@@ -357,7 +357,7 @@ if __name__ == '__main__':
             video.write(frame)
         video.release()
         
-    epsilons = [0.001/255, 0.01/255, 0.1/255]#[0.3/255, 1/255, 3/255, 8/255]
+    epsilons = [0.3/255, 1/255, 3/255, 8/255]
     if args.fgsm:
         np.save('figures/{}/fgsm_epsilons.npy'.format(save_name), epsilons)
         rewards = []

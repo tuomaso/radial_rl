@@ -93,10 +93,7 @@ def train_robust(rank, args, shared_model, optimizer, env_conf):
                 player.values[i + 1].data - player.values[i].data
 
             gae = gae * args.gamma * args.tau + delta_t
-            #add worst case loss, if advantage > 0 worst case loss when prob minimized,
-            #otherwise worst case when it's maximized
-            #print(advantage)
-            #print(player.min_log_probs[i], player.max_log_probs[i])
+            
             if gae >= 0:
                 worst_case_loss = - player.min_log_probs[i] * Variable(gae)
             else:

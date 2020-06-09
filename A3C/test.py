@@ -7,6 +7,7 @@ from model import A3Cff
 from player_util import Agent
 from torch.autograd import Variable
 import time
+from datetime import datetime
 import os
 import logging
 
@@ -14,9 +15,11 @@ import logging
 def test(args, shared_model, optimizer, env_conf):
     ptitle('Test Agent')
     gpu_id = args.gpu_ids[-1]
+    start_time = datetime.now().strftime('%Y-%m-%d_%H_%M_%S')
     log = {}
-    setup_logger('{}_log'.format(args.env), r'{0}{1}_log'.format(
-        args.log_dir, args.env))
+    
+    setup_logger('{}_log'.format(args.env), r'{0}{1}_{2}_log'.format(
+        args.log_dir, args.env, start_time))
     log['{}_log'.format(args.env)] = logging.getLogger('{}_log'.format(
         args.env))
     d_args = vars(args)
@@ -28,9 +31,10 @@ def test(args, shared_model, optimizer, env_conf):
         torch.manual_seed(args.seed)
         if gpu_id >= 0:
             torch.cuda.manual_seed(args.seed)
+            
     env = atari_env(args.env, env_conf, args)
     reward_sum = 0
-    start_time = time.time()
+    start = time.time()
     num_tests = 0
     reward_total_sum = 0
     player = Agent(None, env, args, None)
@@ -46,11 +50,12 @@ def test(args, shared_model, optimizer, env_conf):
             player.model = player.model.cuda()
             player.state = player.state.cuda()
     flag = True
-    max_score = 0
+    max_score = -10000
     
     while True:
         p = optimizer.param_groups[0]['params'][0]
         step = optimizer.state[p]['step']
+        player.model.eval()
         
         if flag:
             if gpu_id >= 0:
@@ -58,7 +63,7 @@ def test(args, shared_model, optimizer, env_conf):
                     player.model.load_state_dict(shared_model.state_dict())
             else:
                 player.model.load_state_dict(shared_model.state_dict())
-            player.model.eval()
+            
             flag = False
         
         with torch.no_grad():
@@ -131,7 +136,7 @@ def test(args, shared_model, optimizer, env_conf):
             log['{}_log'.format(args.env)].info(
                 ("Time {0}, steps {1}/{2}, ep reward {3}, ep length {4}, reward mean {5:.3f} \n"+
                 "Losses: Policy:{6:.3f}, Worst case: {7:.3f}, Value: {8:.3f}, Entropy: {9:.3f}").
-                format(time.strftime("%Hh %Mm %Ss", time.gmtime(time.time() - start_time)),
+                format(time.strftime("%Hh %Mm %Ss", time.gmtime(time.time() - start)),
                     int(step), args.total_frames/args.num_steps, reward_sum, player.eps_len, reward_mean,
                       float(standard_loss), float(worst_case_loss), float(value_loss), float(entropy)))
 
@@ -140,12 +145,12 @@ def test(args, shared_model, optimizer, env_conf):
                 if gpu_id >= 0:
                     with torch.cuda.device(gpu_id):
                         state_to_save = player.model.state_dict()
-                        torch.save(state_to_save, '{0}{1}_best.pt'.format(
-                            args.save_model_dir, args.env))
+                        torch.save(state_to_save, '{0}{1}_{2}_best.pt'.format(
+                            args.save_model_dir, args.env, start_time))
                 else:
                     state_to_save = player.model.state_dict()
-                    torch.save(state_to_save, '{0}{1}_best.pt'.format(
-                        args.save_model_dir, args.env))
+                    torch.save(state_to_save, '{0}{1}_{2}_best.pt'.format(
+                        args.save_model_dir, args.env, start_time))
 
             reward_sum = 0
             player.eps_len = 0
@@ -157,12 +162,12 @@ def test(args, shared_model, optimizer, env_conf):
                 if gpu_id >= 0:
                     with torch.cuda.device(gpu_id):
                         state_to_save = player.model.state_dict()
-                        torch.save(state_to_save, '{0}{1}_last.pt'.format(
-                            args.save_model_dir, args.env))
+                        torch.save(state_to_save, '{0}{1}_{2}_last.pt'.format(
+                            args.save_model_dir, args.env, start_time))
                 else:
                     state_to_save = player.model.state_dict()
-                    torch.save(state_to_save, '{0}{1}_last.pt'.format(
-                        args.save_model_dir, args.env))
+                    torch.save(state_to_save, '{0}{1}_{2}_last.pt'.format(
+                        args.save_model_dir, args.env, start_time))
                 return
             
             time.sleep(10)

@@ -358,7 +358,7 @@ if __name__ == '__main__':
             video.write(frame)
         video.release()
         
-    epsilons = [0.001/255, 0.01/255, 0.1/255]#[0.3/255, 1/255, 3/255, 8/255]
+    epsilons = [0.3/255, 1/255, 3/255, 8/255]
     if args.fgsm:
         np.save('figures/{}/fgsm_epsilons.npy'.format(save_name), epsilons)
         rewards = []

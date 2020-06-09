@@ -39,17 +39,14 @@ class Agent(object):
             upper, lower = network_bounds(self.model.model, Variable(self.state.unsqueeze(0)),
                                           epsilon=bound_epsilon)
             upper, lower = upper[:,1:], lower[:,1:]
-            with torch.cuda.device(self.gpu_id):
-                onehot_action = torch.zeros(upper.shape).cuda()
+            if self.gpu_id>=0:
+                with torch.cuda.device(self.gpu_id):
+                    onehot_action = torch.zeros(upper.shape).cuda()
+            else:
+                onehot_action = torch.zeros(upper.shape)
             onehot_action[range(upper.shape[0]), action] = 1
             min_prob = torch.clamp(F.log_softmax(onehot_action*lower+(1-onehot_action)*upper, dim=1), -30, -1e-6)
             max_prob = torch.clamp(F.log_softmax((1-onehot_action)*lower+onehot_action*upper, dim=1), -30, -1e-6)
-            #highest = torch.max(abs(logit))
-            #if highest > 12:
-            #    print(highest)
-            #    print('Min', min_prob.gather(1, Variable(action)))
-            #    print('Actual', log_prob.gather(1, Variable(action)))
-            #    print('Max', max_prob.gather(1, Variable(action)))
             
             self.max_log_probs.append(max_prob.gather(1, Variable(action)))
             self.min_log_probs.append(min_prob.gather(1, Variable(action)))

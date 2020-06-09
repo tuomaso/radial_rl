@@ -24,14 +24,3 @@ def read_config(file_path):
     return json_object
 
 
-def ensure_shared_grads(model, shared_model, gpu=False):
-    for param, shared_param in zip(model.parameters(),
-                                   shared_model.parameters()):
-        if shared_param.grad is not None and not gpu:
-            return
-        elif not gpu:
-            shared_param._grad = param.grad
-        else:
-            shared_param._grad = param.grad.cpu()
-
-

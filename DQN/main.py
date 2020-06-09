@@ -6,7 +6,6 @@ from environment import atari_env
 from utils import read_config
 from model import CnnDQN
 from train import train
-from train_prioritized import train_prioritized
 #from gym.configuration import undo_logger_setup
 import time
 
@@ -62,12 +61,7 @@ parser.add_argument(
     '--optimizer',
     default='Adam',
     metavar='OPT',
-    help='shares optimizer choice of Adam or RMSprop')
-parser.add_argument(
-    '--load-model-dir',
-    default='trained_models/',
-    metavar='LMD',
-    help='folder to load trained models from')
+    help='optimizer to use, one of {Adam, RMSprop}')
 parser.add_argument(
     '--save-model-dir',
     default='trained_models/',
@@ -102,32 +96,15 @@ parser.add_argument(
     default=0.5,
     metavar='SR',
     help='final value of the variable controlling importance of standard loss (default: 0.5)')
-parser.add_argument(
-    '--sadqn-kappa',
-    type=float,
-    default=0.01,
-    metavar='SR',
-    help='the regularization coefficient for sadqn')
 parser.add_argument('--robust',
                    dest='robust',
                    action='store_true',
                    help='train the model to be verifiably robust')
-parser.add_argument('--prioritized',
-                   dest='prioritized',
-                   action='store_true',
-                   help='whether to use prioritized replay buffer')
-parser.add_argument('--sadqn',
-                   dest='sadqn',
-                   action='store_true',
-                   help='whether to use the SA-DQN regularizer for robust training')
 parser.add_argument(
-    '--load', dest='load',
-    action='store_true',
-    help='whether to load a trained model')
-parser.add_argument(
-    '--geometric', dest='geometric',
-    action='store_true',
-    help='whether to use geometric mean of standard and worst case loss')
+    '--load-path',
+    type=str,
+    default=None,
+    help='Path to load a model from. By default starts training a new model')
 
 parser.add_argument(
     '--attack-epsilon-end',
@@ -172,7 +149,7 @@ parser.add_argument(
     help='How frames to store in replay buffer')
 
 
-parser.set_defaults(robust=False, load=False, sadqn=False, prioritized=False, geometric=False)
+parser.set_defaults(robust=False)
 
 if __name__ == '__main__':
     args = parser.parse_args()
@@ -193,9 +170,9 @@ if __name__ == '__main__':
     if not os.path.exists(args.save_model_dir):
         os.mkdir(args.save_model_dir)
     
-    if args.load:
+    if args.load_path:
         saved_state = torch.load(
-            '{0}{1}_trained.pt'.format(args.load_model_dir, args.env),
+            args.load_path,
             map_location=lambda storage, loc: storage)
         curr_model.load_state_dict(saved_state)
         
@@ -208,10 +185,8 @@ if __name__ == '__main__':
             
     if args.optimizer == 'RMSprop':
         optimizer = torch.optim.RMSprop(curr_model.parameters(), lr=args.lr, momentum=0.95, alpha=0.95, eps=1e-2)
-    if args.optimizer == 'Adam':
+    elif args.optimizer == 'Adam':
         optimizer = torch.optim.Adam(curr_model.parameters(), lr=args.lr, amsgrad=args.amsgrad)
-    if args.prioritized:
-        train_prioritized(curr_model, target_model, env, optimizer, args)
-    else:
-        train(curr_model, target_model, env, optimizer, args)
+    
+    train(curr_model, target_model, env, optimizer, args)
         

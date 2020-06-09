@@ -54,9 +54,9 @@ parser.add_argument(
 parser.add_argument(
     '--total-frames',
     type=int,
-    default=6000000,
+    default=20000000,
     metavar='TS',
-    help='How many frames to train for before finishing (default: 6000000)')
+    help='How many frames to train for before finishing (default: 20000000)')
 parser.add_argument(
     '--max-episode-length',
     type=int,
@@ -84,11 +84,6 @@ parser.add_argument(
     default='Adam',
     metavar='OPT',
     help='shares optimizer choice of Adam or RMSprop')
-parser.add_argument(
-    '--load-model-dir',
-    default='trained_models/',
-    metavar='LMD',
-    help='folder to load trained models from')
 parser.add_argument(
     '--save-model-dir',
     default='trained_models/',
@@ -124,25 +119,27 @@ parser.add_argument('--robust',
                    action='store_true',
                    help='train the model to be verifiably robust')
 parser.add_argument(
-    '--load', dest='load',
-    action='store_true',
-    help='whether to load a trained model')
+    '--load-path',
+    default=None,
+    help='Path to load a model from. By default starts training a new model')
 parser.add_argument(
     '--epsilon-end',
     type=float,
     default= 1/255,
     metavar='EPS',
-    help='')
+    help='max size of perturbation trained on')
 
-parser.set_defaults(robust=False, load=False)
-# Based on
-# https://github.com/pytorch/examples/tree/master/mnist_hogwild
-# Training settings
-# Implemented multiprocessing using locks but was not beneficial. Hogwild
-# training was far superior
+parser.set_defaults(robust=False)
+
 
 if __name__ == '__main__':
     args = parser.parse_args()
+    
+    if not os.path.exists(args.log_dir):
+        os.mkdir(args.log_dir)
+    if not os.path.exists(args.save_model_dir):
+        os.mkdir(args.save_model_dir)
+        
     if args.seed:
         torch.manual_seed(args.seed)
     if args.gpu_ids == -1:
@@ -158,12 +155,12 @@ if __name__ == '__main__':
             env_conf = setup_json[i]
     env = atari_env(args.env, env_conf, args)
     shared_model = A3Cff(env.observation_space.shape[0], env.action_space)
-    if args.load:
-        #
-        saved_state = torch.load(
-            '{0}{1}_trained.pt'.format(args.load_model_dir, args.env),
-            map_location=lambda storage, loc: storage)
+    if args.load_path:
+        
+        saved_state = torch.load(args.load_path,
+                                     map_location=lambda storage, loc: storage)
         shared_model.load_state_dict(saved_state)
+           
     shared_model.share_memory()
 
     if args.optimizer == 'RMSprop':

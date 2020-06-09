@@ -4,7 +4,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
-
 class A3Cff(torch.nn.Module):
     def __init__(self, num_inputs, action_space):
         super(A3Cff, self).__init__()
