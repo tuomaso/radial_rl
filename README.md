@@ -1,5 +1,3 @@
-> 📋A template README.md for code accompanying a Machine Learning paper
-
 # Robust Deep Reinforcement Learning through Adversarial Loss
 
 This repository is the official implementation of [Robust Deep Reinforcement Learning through Adversarial Loss](https://arxiv.org/abs/2030.12345). (link is a placeholder)
