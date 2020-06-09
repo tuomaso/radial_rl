@@ -5,7 +5,7 @@
 This repository is the official implementation of [Robust Deep Reinforcement Learning through Adversarial Loss](https://arxiv.org/abs/2030.12345). (link is a placeholder)
 Our code builds on top of various existing implementations, most notably:
 
-A3C implementation overall flow based on https://github.com/dgriff777/rl_a3c_pytorch.
+A3C implementation and overall flow based on https://github.com/dgriff777/rl_a3c_pytorch.
 
 DQN implementation based on https://github.com/higgsfield/RL-Adventure
 
@@ -14,7 +14,7 @@ Adversarial attack implementations based on https://github.com/advboxes/AdvBox/b
 
 
 ## Requirements
-To run our code you need to have Python 3(>=3.7) and pip installed on your systems. Additionally we require PyTorch>=1.4, which should be installed using instructions from https://pytorch.org/get-started/locally/.
+To run our code you need to have Python 3 (>=3.7) and pip installed on your systems. Additionally we require PyTorch>=1.4, which should be installed using instructions from https://pytorch.org/get-started/locally/.
 
 To install requirements:
 
@@ -24,7 +24,7 @@ pip install -r requirements.txt
 
 ## Pre-trained Models
 
-You can download our trained models for DQN here:(link to be included), and for A3C here:(tbd). We suggest unpacking these to 'DQN/trained_models/' and 'A3C/trained_models/'.
+You can download our trained models for DQN here:(tbd), and for A3C here:(tbd). We suggest unpacking these to 'DQN/trained_models/' and 'A3C/trained_models/' respectively.
 
 ## Training
 
@@ -34,14 +34,14 @@ To train a standard DQN model on Pong like the one used in our paper, run this c
 cd DQN
 python main.py 
 ```
-To use gpu x(in a system with one gpu x=0) add the following argument --gpu-id x
-To train in another game, like RoadRunner use --env RoadRunnerNoFrameskip-v4. Other games used in the paper are FreewayNoFrameskip-v4 and BankHeistNoFrameskip-v4 
+To speed up training by using gpu x (in a system with one gpu x=0) add the following argument --gpu-id x.
+To train in another game, like RoadRunner use --env RoadRunnerNoFrameskip-v4. Other games used in the paper are FreewayNoFrameskip-v4 and BankHeistNoFrameskip-v4. 
 
 ```train A3C
 cd A3C
 python main.py 
 ```
-Additionally you can use --gpu-ids argument to train with one or more gpus, for example use GPUs 0 and 1 with '--gpu-ids 0 1'. Note the default value of workers used for A3C is 16, and you might want to change it to the amount of cpu cores in system for max efficiency with the argument --workers 4 for example. 
+Additionally you can use --gpu-ids argument to train with one or more gpus, for example use GPUs 0 and 1 with '--gpu-ids 0 1'. Note the default value of workers used for A3C is 16, and you might want to change it to the amount of cpu cores in system for max efficiency with the argument --workers 4 for example. This may effect results however.
 
 The models will be saved in args.save_model_dir, with a name of their environment and time and date training started. Each run produces two models but we used the \_last.pt for all experiments, while \_best.pt is mostly useful as intermediate checkpoint if training is disrupted. 
 
