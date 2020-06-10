@@ -6,3 +6,4 @@ jupyter==1.0.0
 notebook==6.0.3
 opencv-python==4.2.0.34
 setproctitle==1.1.10
+matplotlib==3.2.1
