@@ -90,7 +90,7 @@ TODO: fill this
 
 > 📋Pick a licence and describe how to contribute to your code repository. 
 
-##Common issues
+## Common issues
 
 On some machines you might get the following error ImportError: libSM.so.6: cannot open shared object file: No such file or directory,
 which can be fixed by running the following line: 
