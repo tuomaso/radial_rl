@@ -87,8 +87,7 @@ TODO: fill this
 
 
 ## Contributing
-
-> 📋Pick a licence and describe how to contribute to your code repository. 
+This code version is for NeurIPS 2020 review only, do not distirbute.
 
 ## Common issues
 
