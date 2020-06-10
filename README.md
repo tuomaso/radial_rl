@@ -32,14 +32,14 @@ To train a standard DQN model on Pong like the one used in our paper, run this c
 cd DQN
 python main.py 
 ```
-To speed up training by using gpu x (in a system with one gpu x=0) add the following argument --gpu-id x.
-To train in another game, like RoadRunner use --env RoadRunnerNoFrameskip-v4. Other games used in the paper are FreewayNoFrameskip-v4 and BankHeistNoFrameskip-v4. 
+To speed up training by using gpu x (in a system with one gpu x=0) add the following argument `--gpu-id x`.
+To train in another game, like RoadRunner use `--env RoadRunnerNoFrameskip-v4`. Other games used in the paper are `FreewayNoFrameskip-v4 `and `BankHeistNoFrameskip-v4`. 
 
 ```train A3C
 cd A3C
 python main.py 
 ```
-Additionally you can use --gpu-ids argument to train with one or more gpus, for example use GPUs 0 and 1 with '--gpu-ids 0 1'. Note the default value of workers used for A3C is 16, and you might want to change it to the amount of cpu cores in system for max efficiency with the argument --workers 4 for example. This may effect results however.
+Additionally you can use --gpu-ids argument to train with one or more gpus, for example use GPUs 0 and 1 with `--gpu-ids 0 1`. Note the default value of workers used for A3C is 16, and you might want to change it to the amount of cpu cores in system for max efficiency with the argument `--workers 4` for example. This may effect results however.
 
 The models will be saved in args.save_model_dir, with a name of their environment and time and date training started. Each run produces two models but we used the \_last.pt for all experiments, while \_best.pt is mostly useful as intermediate checkpoint if training is disrupted. 
 
@@ -68,7 +68,7 @@ To evaluate our robustly trained BankHeist model using the metrics described in 
 ```
 python evaluate.py --env BankHeistNoFrameskip-v4 --load-path "trained_models/BankHeistNoFrameskip-v4_robust.pt" --pgd --gwc --nominal 
 ```
-Additionally you can use --gpu-id x argument to use a GPU to speed up evaluation. Note that pgd takes much longer to run than other evaluation metrics, so you can try replacing it with much faster evaluation against FGSM attacks by switching the command to --fgsm.
+Additionally you can use `--gpu-id x` argument to use a GPU to speed up evaluation. Note that pgd takes much longer to run than other evaluation metrics, so you can try replacing it with much faster evaluation against FGSM attacks by switching the command to `--fgsm`.
 
 Results will be saved in numpy arrays, and the result_viewer.ipynb provide a convenient way to view them.
 
