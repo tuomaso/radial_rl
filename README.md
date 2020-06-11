@@ -79,21 +79,17 @@ Results will be saved in numpy arrays, and the result_viewer.ipynb provide a con
 | Game         | Model\Metric |  PGD attack  |             |  GWC reward  |
 |--------------|--------------|:------------:|:-----------:|:------------:|
 |              |    epsilon   |     1/255    |    3/255    |     1/255    |
-|              |              |              |             |              |
 |     Pong     | RS-DQN       |     18.13    |      -      |       -      |
 |              | SA-DQN       |   20.1+-0.0  |      -      |       -      |
 |              | RADIAL-DQN   |  20.8+-0.09  |  20.8+-0.09 |  -1.85+-4.62 |
 |              | RADIAL-A3C   |   20.0+-0.0  |  20.0+-0.0  |   20.0+-0.0  |
-|              |              |              |             |              |
 |    Freeway   | RS-DQN       |     32.53    |      -      |       -      |
 |              | SA-DQN       |  30.36+-0.7  |      -      |       -      |
 |              | RADIAL-DQN   |  21.95+-0.40 | 21.55+-0.26 |  21.7+-0.39  |
-|              |              |              |             |              |
 |   BankHeist  | RS-DQN       |    190.67    |      -      |       -      |
 |              | SA-DQN       |  1043.6+-9.5 |      -      |       -      |
 |              | RADIAL-DQN   | 1038.0+-23.0 | 833.5+-45.2 | 1048.0+-32.3 |
 |              | RADIAL-A3C   |  848.0+-3.8  |  827.0+-6.0 |  832.5+-4.1  |
-|              |              |              |             |              |
 |  RoadRunner  | RS-DQN       |    5753.33   |      -      |       -      |
 |              | SA-DQN       |  15280+-828  |      -      |       -      |
 |              | RADIAL-DQN   |  43920+-1238 |  12480+-901 |  33745+-2389 |
