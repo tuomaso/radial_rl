@@ -22,7 +22,7 @@ pip install -r requirements.txt
 
 ## Pre-trained Models
 
-You can download our trained models for DQN here:(tbd), and for A3C here:(tbd). We suggest unpacking these to 'DQN/trained_models/' and 'A3C/trained_models/' respectively.
+You can download our trained models for DQN here:(tbd), and for A3C here:(tbd). We suggest unpacking these to `radial_rl/DQN/trained_models/` and `radial_rl/A3C/trained_models/` respectively.
 
 ## Training
 
@@ -100,10 +100,18 @@ Results will be saved in numpy arrays, and the result_viewer.ipynb provide a con
 |              | RADIAL-A3C   |  30435+-1504 | 30620+-1141 |  29595+-1428 |
 
 ### Training commands for models above
-For DQN models make sure you are in the 'radial_rl/DQN' directory before issuing commands, and in the 'radial_rl/A3C' directory for A3C models.
+For DQN models make sure you are in the `radial_rl/DQN` directory before issuing commands, and in the `radial_rl/A3C` directory for A3C models. And have downloaded the pretrained models to specified directories.
 
-Pong RADIAL-DQN
-Pong RADIAL-A3C
+| Game       | Model      |                                                                                          Command                                                                                          |
+|------------|------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+|    Pong    | RADIAL-DQN |               python main.py --robust --load-path "trained_models/PongNoFrameskip-v4_trained.pt" --total-frames 4500000 --exp-epsilon-decay 1 --replay-initial 256 --amsgrad              |
+|            | RADIAL-A3C |                                         python main.py --robust --load-path "trained_models/PongNoFrameskip-v4_trained.pt" --total-frames 10000000                                        |
+|   Freeway  | RADIAL-DQN |    python main.py --env FreewayNoFrameskip-v4 --robust --load-path "trained_models/FreewayNoFrameskip-v4_trained.pt" --total-frames 4500000 --exp-epsilon-decay 1 --replay-initial 256    |
+|  BankHeist | RADIAL-DQN |  python main.py --env BankHeistNoFrameskip-v4 --robust --load-path "trained_models/BankHeistNoFrameskip-v4_trained.pt" --total-frames 4500000 --exp-epsilon-decay 1 --replay-initial 256  |
+|            | RADIAL-A3C |                       python main.py --env BankHeistNoFrameskip-v4 --robust --load-path "trained_models/BankHeistNoFrameskip-v4_trained.pt" --total-frames 10000000                       |
+| RoadRunner | RADIAL-DQN | python main.py --env RoadRunnerNoFrameskip-v4 --robust --load-path "trained_models/RoadRunnerNoFrameskip-v4_trained.pt" --total-frames 4500000 --exp-epsilon-decay 1 --replay-initial 256 |
+|            | RADIAL-A3C |                      python main.py --env RoadRunnerNoFrameskip-v4 --robust --load-path "trained_models/RoadRunnerNoFrameskip-v4_trained.pt" --total-frames 10000000
+
 ## Contributing
 This code version is for NeurIPS 2020 review only, do not distribute.
 
