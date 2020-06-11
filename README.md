@@ -79,15 +79,33 @@ TODO: fill this
 
 ### [Image Classification on ImageNet](https://paperswithcode.com/sota/image-classification-on-imagenet)
 
-| Model name         | Top 1 Accuracy  | Top 5 Accuracy |
-| ------------------ |---------------- | -------------- |
-| My awesome model   |     85%         |      95%       |
-
-> 📋Include a table of results from your paper, and link back to the leaderboard for clarity and context. If your main result is a figure, include that figure and link to the command or notebook to reproduce it. 
+| Model\Metric |  PGD attack  |             |  GWC reward  |
+|--------------|:------------:|:-----------:|:------------:|
+| $ \epsilon $ |     1/255    |    3/255    |     1/255    |
+|     Pong     |              |             |              |
+| RS-DQN       |     18.13    |      -      |       -      |
+| SA-DQN       |   20.1+-0.0  |      -      |       -      |
+| Robust DQN   |  20.8+-0.09  |  20.8+-0.09 |  -1.85+-4.62 |
+| Robust A3C   |   20.0+-0.0  |  20.0+-0.0  |   20.0+-0.0  |
+|    Freeway   |              |             |              |
+| RS-DQN       |     32.53    |      -      |       -      |
+| SA-DQN       |  30.36+-0.7  |      -      |       -      |
+| Robust DQN   |  21.95+-0.40 | 21.55+-0.26 |  21.7+-0.39  |
+|   BankHeist  |              |             |              |
+| RS-DQN       |    190.67    |      -      |       -      |
+| SA-DQN       |  1043.6+-9.5 |      -      |       -      |
+| Robust DQN   | 1038.0+-23.0 | 833.5+-45.2 | 1048.0+-32.3 |
+| Robust A3C   |  848.0+-3.8  |  827.0+-6.0 |  832.5+-4.1  |
+| Road- Runner |              |             |              |
+| RS-DQN       |    5753.33   |      -      |       -      |
+| SA-DQN       |  15280+-828  |      -      |       -      |
+| Robust DQN   |  43920+-1238 |  12480+-901 |  33745+-2389 |
+| Robust A3C   |  30435+-1504 | 30620+-1141 |  29595+-1428 |
+|              |              |             |              |
 
 
 ## Contributing
-This code version is for NeurIPS 2020 review only, do not distirbute.
+This code version is for NeurIPS 2020 review only, do not distribute.
 
 ## Common issues
 
