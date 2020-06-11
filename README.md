@@ -75,8 +75,6 @@ Results will be saved in numpy arrays, and the result_viewer.ipynb provide a con
 
 ## Results
 
-
-
 ### Robustness on Atari games
 | Game         | Model\Metric |  PGD attack  |             |  GWC reward  |
 |--------------|--------------|:------------:|:-----------:|:------------:|
@@ -96,12 +94,16 @@ Results will be saved in numpy arrays, and the result_viewer.ipynb provide a con
 |              | RADIAL-DQN   | 1038.0+-23.0 | 833.5+-45.2 | 1048.0+-32.3 |
 |              | RADIAL-A3C   |  848.0+-3.8  |  827.0+-6.0 |  832.5+-4.1  |
 |              |              |              |             |              |
-| Road- Runner | RS-DQN       |    5753.33   |      -      |       -      |
+|  RoadRunner  | RS-DQN       |    5753.33   |      -      |       -      |
 |              | SA-DQN       |  15280+-828  |      -      |       -      |
 |              | RADIAL-DQN   |  43920+-1238 |  12480+-901 |  33745+-2389 |
 |              | RADIAL-A3C   |  30435+-1504 | 30620+-1141 |  29595+-1428 |
 
+### Training commands for models above
+For DQN models make sure you are in the 'radial_rl/DQN' directory before issuing commands, and in the 'radial_rl/A3C' directory for A3C models.
 
+Pong RADIAL-DQN
+Pong RADIAL-A3C
 ## Contributing
 This code version is for NeurIPS 2020 review only, do not distribute.
 
