@@ -75,9 +75,9 @@ Results will be saved in numpy arrays, and the result_viewer.ipynb provide a con
 
 ## Results
 
-TODO: fill this
 
-### [Image Classification on ImageNet](https://paperswithcode.com/sota/image-classification-on-imagenet)
+
+### [Robust performance on Atari games]
 
 | Model\Metric |  PGD attack  |             |  GWC reward  |
 |--------------|:------------:|:-----------:|:------------:|
