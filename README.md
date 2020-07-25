@@ -1,12 +1,16 @@
 # Robust Deep Reinforcement Learning through Adversarial Loss
 
 This repository is the official implementation of [Robust Deep Reinforcement Learning through Adversarial Loss](https://arxiv.org/abs/2030.12345). (link is a placeholder)
+
+# Overview
+
+RADIAL(Robust ADversarIAl Loss) - RL, is a framework for training more robust deep RL agents. It leverages algorithms for calculating certified output bounds such as Interval Bound Probagation to minimize an upper bound of the original algorithms loss function under worst possible (bounded) adversarial perturbation.
+
+
 Our code builds on top of various existing implementations, most notably:
 
 A3C implementation and overall flow based on https://github.com/dgriff777/rl_a3c_pytorch.
-
 DQN implementation based on https://github.com/higgsfield/RL-Adventure
-
 Adversarial attack implementations based on https://github.com/advboxes/AdvBox/blob/master/advbox.md.
 
 
