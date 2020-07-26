@@ -4,14 +4,15 @@ This repository is the official implementation of [Robust Deep Reinforcement Lea
 
 # Overview
 
-**RADIAL**(**R**obust **AD**versar**IA**l **L**oss) - RL, is a framework for training more robust deep RL agents. It leverages algorithms for calculating certified output bounds such as Interval Bound Probagation to minimize an upper bound of the original algorithms loss function under worst possible (bounded) adversarial perturbation. This framework significantly increases neural net robustness against PGD-attacks. In addition we propose *Greedy Worst-Case Reward (GWC)*, an efficient method for estimating agents performance under worst possible sequence of adversarial attacks.
+**RADIAL**(**R**obust **AD**versar**IA**l **L**oss) - RL, is a framework for training more robust deep RL agents. It leverages algorithms for calculating certified output bounds such as Interval Bound Probagation to minimize an upper bound of the original algorithms loss function under worst possible (bounded) adversarial perturbation. This framework significantly increases neural net robustness against PGD-attacks. 
+In addition we propose *Greedy Worst-Case Reward (GWC)*, an efficient method for estimating agents performance under worst possible sequence of adversarial attacks.
 
 
 Our code builds on top of various existing implementations, most notably:
 
-A3C implementation and overall flow based on https://github.com/dgriff777/rl_a3c_pytorch.
-DQN implementation based on https://github.com/higgsfield/RL-Adventure
-Adversarial attack implementations based on https://github.com/advboxes/AdvBox/blob/master/advbox.md.
+* A3C implementation and overall flow based on https://github.com/dgriff777/rl_a3c_pytorch.
+* DQN implementation based on https://github.com/higgsfield/RL-Adventure
+* Adversarial attack implementations based on https://github.com/advboxes/AdvBox/blob/master/advbox.md.
 
 
 
