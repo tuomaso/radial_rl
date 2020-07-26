@@ -6,7 +6,7 @@ import random
 import gym
 import matplotlib.pyplot as plt
 import numpy as np
-from cv2 import VideoWriter, VideoWriter_fourcc
+from PIL import Image
 
 import torch
 import torch.nn as nn
@@ -317,16 +317,9 @@ if __name__ == '__main__':
         reward, states = record_game(model, env, args)
         print(reward)
 
-        width = env.observation_space.shape[1]
-        height = env.observation_space.shape[2]
-        FPS = 20
-        fourcc = VideoWriter_fourcc(*'MP42')
-        video = VideoWriter('videos/{}.avi'.format(save_name), fourcc, float(FPS), (width, height))
-
-        states = np.transpose(np.repeat(states, 3, axis=1), (0, 2, 3, 1))
-        for frame in states:
-            video.write(frame)
-        video.release()
+        im = Image.fromarray(states[0,0], mode='L')
+        im.save('videos/{}.gif'.format(save_name), save_all=True, optimize=True, duration=40, mode='L', loop=0,
+                append_images=[Image.fromarray(state[0]) for state in states[1:]])
     
     if args.fgsm_video:
         reward, states = attack_eval(model, env, args, args.fgsm_video, 'FGSM', record=True)
@@ -334,14 +327,9 @@ if __name__ == '__main__':
 
         width = env.observation_space.shape[1]
         height = env.observation_space.shape[2]
-        FPS = 20
-        fourcc = VideoWriter_fourcc(*'MP42')
-        video = VideoWriter('videos/{}_fgsm_{}.avi'.format(save_name, args.fgsm_video), fourcc, float(FPS), (width, height))
-
-        states = np.transpose(np.repeat(states, 3, axis=1), (0, 2, 3, 1))
-        for frame in states:
-            video.write(frame)
-        video.release()
+        im = Image.fromarray(states[0,0], mode='L')
+        im.save('videos/{}_fgsm_{}.gif'.format(save_name, args.fgsm_video), save_all=True, duration=40, mode='L', loop=0,
+                append_images=[Image.fromarray(state[0]) for state in states[1:]])
     
     if args.pgd_video:
         reward, states = attack_eval(model, env, args, args.pgd_video, 'PGD',record=True)
@@ -349,14 +337,9 @@ if __name__ == '__main__':
 
         width = env.observation_space.shape[1]
         height = env.observation_space.shape[2]
-        FPS = 20
-        fourcc = VideoWriter_fourcc(*'MP42')
-        video = VideoWriter('videos/{}_pgd_{}.avi'.format(save_name, args.pgd_video), fourcc, float(FPS), (width, height))
-
-        states = np.transpose(np.repeat(states, 3, axis=1), (0, 2, 3, 1))
-        for frame in states:
-            video.write(frame)
-        video.release()
+        im = Image.fromarray(states[0,0], mode='L')
+        im.save('videos/{}_pgd_{}.gif'.format(save_name, args.pgd_video), save_all=True, duration=40, mode='L', loop=0,
+                append_images=[Image.fromarray(state[0]) for state in states[1:]])
         
     epsilons = [0.3/255, 1/255, 3/255, 8/255]
     if args.fgsm:
