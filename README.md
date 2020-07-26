@@ -28,7 +28,7 @@ pip install -r requirements.txt
 
 ## Pre-trained Models
 
-You can download our trained models from Dropbox: [DQN trained models](https://www.dropbox.com/s/xdwulv6mhbvgrk9/A3C_trained_models.zip?dl=0), [A3C trained mdoels](https://www.dropbox.com/s/xdwulv6mhbvgrk9/A3C_trained_models.zip?dl=0). We suggest unpacking these to `radial_rl/DQN/trained_models/` and `radial_rl/A3C/trained_models/` respectively.
+You can download our trained models from Dropbox: [DQN trained models](https://www.dropbox.com/s/xdwulv6mhbvgrk9/A3C_trained_models.zip?dl=0), [A3C trained models](https://www.dropbox.com/s/xdwulv6mhbvgrk9/A3C_trained_models.zip?dl=0). We suggest unpacking these to `radial_rl/DQN/trained_models/` and `radial_rl/A3C/trained_models/` respectively.
 
 ## Training
 
