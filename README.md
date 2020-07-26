@@ -8,6 +8,7 @@ This repository is the official implementation of [Robust Deep Reinforcement Lea
 
 In addition we propose *Greedy Worst-Case Reward (GWC)*, an efficient method for estimating agents performance under worst possible sequence of adversarial attacks.
 
+![Standard A3C Pong](/A3C/videos/PongNoFrameskip-v4_trained.gif)
 
 Our code builds on top of various existing implementations, most notably:
 
