@@ -28,7 +28,7 @@ pip install -r requirements.txt
 
 ## Pre-trained Models
 
-You can download our trained models for DQN here:(tbd), and for A3C here:(tbd). We suggest unpacking these to `radial_rl/DQN/trained_models/` and `radial_rl/A3C/trained_models/` respectively.
+You can download our trained models for DQN here:https://www.dropbox.com/s/xdwulv6mhbvgrk9/A3C_trained_models.zip?dl=0, and for A3C here:https://www.dropbox.com/s/xdwulv6mhbvgrk9/A3C_trained_models.zip?dl=0. We suggest unpacking these to `radial_rl/DQN/trained_models/` and `radial_rl/A3C/trained_models/` respectively.
 
 ## Training
 
@@ -114,8 +114,6 @@ For DQN models make sure you are in the `radial_rl/DQN` directory before issuing
 | RoadRunner | RADIAL-DQN | python main.py --env RoadRunnerNoFrameskip-v4 --robust --load-path "trained_models/RoadRunnerNoFrameskip-v4_trained.pt" --total-frames 4500000 --exp-epsilon-decay 1 --replay-initial 256 |
 |            | RADIAL-A3C |                      python main.py --env RoadRunnerNoFrameskip-v4 --robust --load-path "trained_models/RoadRunnerNoFrameskip-v4_trained.pt" --total-frames 10000000
 
-## Contributing
-This code version is for NeurIPS 2020 review only, do not distribute.
 
 ## Common issues
 
