@@ -11,9 +11,9 @@ In addition we propose *Greedy Worst-Case Reward (GWC)*, an efficient method for
 <img src="/A3C/videos/PongNoFrameskip-v4_trained.gif" width="240" height="240"/>   <img src="/A3C/videos/PongNoFrameskip-v4_trained_pgd_0.0039.gif" width="240" height="240"/>   <img src="/A3C/videos/PongNoFrameskip-v4_robust_pgd_0.0118.gif" width="240" height="240"/>
 
 Trained A3C agents playing a game of Pong(trained agents control the right paddle). From left to right: 
-* A3C under no perturbation reward 21.0
-* A3C under continuous 1/255 PGD-attack, reward -19.0 standard agent fails under almost incerceptiple perturbations.
-* RADIAL-A3C under 3/255 PGD-attack, reward 20.0 after our training retains high performance even against 3x larger perturbation. 
+* A3C under no perturbation, reward 21.0
+* A3C under continuous 1/255 PGD-attack, reward -19.0. Standard agent fails under almost incerceptiple perturbations.
+* RADIAL-A3C under 3/255 PGD-attack, reward 20.0. After RADIAL training retains high performance even against 3x larger perturbation. 
 
 Our code builds on top of various existing implementations, most notably:
 
