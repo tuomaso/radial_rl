@@ -1,6 +1,6 @@
 # Robust Deep Reinforcement Learning through Adversarial Loss
 
-This repository is the official implementation of [Robust Deep Reinforcement Learning through Adversarial Loss](https://arxiv.org/abs/2030.12345). (link is a placeholder)
+This repository is the official implementation of [Robust Deep Reinforcement Learning through Adversarial Loss](https://https://arxiv.org/abs/2008.01976).
 
 # Overview
 
