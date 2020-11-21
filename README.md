@@ -117,7 +117,7 @@ For DQN models make sure you are in the `radial_rl/DQN` directory before issuing
 |   Freeway  | RADIAL-DQN |    python main.py --env FreewayNoFrameskip-v4 --robust --load-path "trained_models/FreewayNoFrameskip-v4_trained.pt" --total-frames 4500000 --exp-epsilon-decay 1 --replay-initial 256    |
 |  BankHeist | RADIAL-DQN |  python main.py --env BankHeistNoFrameskip-v4 --robust --load-path "trained_models/BankHeistNoFrameskip-v4_trained.pt" --total-frames 4500000 --exp-epsilon-decay 1 --replay-initial 256  |
 |            | RADIAL-A3C |                       python main.py --env BankHeistNoFrameskip-v4 --robust --load-path "trained_models/BankHeistNoFrameskip-v4_trained.pt" --total-frames 10000000                       |
-| RoadRunner | RADIAL-DQN | python main.py --env RoadRunnerNoFrameskip-v4 --robust --load-path "trained_models/RoadRunnerNoFrameskip-v4_trained.pt" --total-frames 4500000 --exp-epsilon-decay 1 --replay-initial 256 |
+| RoadRunner | RADIAL-DQN | python main.py --env RoadRunnerNoFrameskip-v4 --robust --load-path "trained_models/RoadRunnerNoFrameskip-v4_trained.pt" --total-frames 4500000 --exp-epsilon-decay 1 --replay-initial 256 --exp-epsilon-end 0.01 --adam-eps 0.00015 |
 |            | RADIAL-A3C |                      python main.py --env RoadRunnerNoFrameskip-v4 --robust --load-path "trained_models/RoadRunnerNoFrameskip-v4_trained.pt" --total-frames 10000000
 
 
