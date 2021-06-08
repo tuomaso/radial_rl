@@ -1,7 +1,7 @@
 numpy==1.18.1
 gym==0.17.1
 atari-py==0.2.6
-Pillow==8.1.1
+Pillow==8.2.0
 jupyter==1.0.0
 notebook==6.1.5
 opencv-python==4.2.0.34
