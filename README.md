@@ -1,6 +1,8 @@
 # Robust Deep Reinforcement Learning through Adversarial Loss
 
-This repository is the official implementation of [Robust Deep Reinforcement Learning through Adversarial Loss](https://arxiv.org/abs/2008.01976).
+Updated code release here: [https://github.com/tuomaso/radial_rl_v2](https://github.com/tuomaso/radial_rl_v2).
+
+This repository is an old version of our implementation for [Robust Deep Reinforcement Learning through Adversarial Loss](https://arxiv.org/abs/2008.01976). See up to date code above.
 
 # Overview
 
